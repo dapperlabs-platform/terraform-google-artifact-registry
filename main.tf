@@ -14,6 +14,18 @@
  * limitations under the License.
  */
 
+locals {  
+    iam_additive_obj = flatten([
+        for role, members in var.iam_additives:
+        [for member in members: {role: role, member: member}]
+    ])
+
+    iam_additive_map = {
+        for v in local.iam_additive_obj: "${v.role}/${v.member}" => v
+    }
+
+}
+
 resource "google_artifact_registry_repository" "registry" {
   provider      = google-beta
   project       = var.project_id
@@ -26,10 +38,10 @@ resource "google_artifact_registry_repository" "registry" {
 
 resource "google_artifact_registry_repository_iam_binding" "bindings" {
   provider   = google-beta
-  for_each   = var.iam
+  for_each   = var.iam_additive_map
   project    = var.project_id
   location   = google_artifact_registry_repository.registry.location
   repository = google_artifact_registry_repository.registry.name
-  role       = each.key
-  members    = each.value
+  role       = each.value.role
+  members    = each.value.member
 }

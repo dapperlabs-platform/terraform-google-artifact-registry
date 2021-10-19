@@ -53,3 +53,8 @@ variable "id" {
   description = "Repository id"
   type        = string
 }
+
+variable "iam_additives" {
+  description = "IAM additive bindings in {ROLE => [MEMBERS]} format.	"
+  type = map(string)
+}
