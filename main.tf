@@ -15,7 +15,7 @@
  */
 
 locals {  
-    iam_additive_obj = flatten([
+    iam_additive_list = flatten([
         for role, members in var.iam_additives:
         [for member in members: {role: role, member: member}]
     ])
@@ -38,10 +38,20 @@ resource "google_artifact_registry_repository" "registry" {
 
 resource "google_artifact_registry_repository_iam_binding" "bindings" {
   provider   = google-beta
+  for_each   = var.iam
+  project    = var.project_id
+  location   = google_artifact_registry_repository.registry.location
+  repository = google_artifact_registry_repository.registry.name
+  role       = each.key
+  members    = each.value
+}
+
+resource "google_artifact_registry_repository_iam_binding" "bindings_member" {
+  provider   = google-beta
   for_each   = var.iam_additive_map
   project    = var.project_id
   location   = google_artifact_registry_repository.registry.location
   repository = google_artifact_registry_repository.registry.name
   role       = each.value.role
-  members    = each.value.member
+  member     = each.value.member
 }
