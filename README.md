@@ -31,6 +31,8 @@ module "docker_artifact_registry" {
 | _description_ | An optional description for the repository                                        |                       <code title="">string</code>                       |          | <code title="">Terraform-managed registry</code> |
 | _format_      | Repository format. One of DOCKER or UNSPECIFIED                                   |                       <code title="">string</code>                       |          |           <code title="">DOCKER</code>           |
 | _iam_         | IAM bindings in {ROLE => [MEMBERS]} format.                                       | <code title="map&#40;list&#40;string&#41;&#41;">map(list(string))</code> |          |             <code title="">{}</code>             |
+| _iam_additive        | IAM addtive bindings in {ROLE => [MEMBERS]} format.                                       | <code title="map&#40;list&#40;string&#41;&#41;">map(list(string))</code> |          |             <code title="">{}</code>             |
+
 | _labels_      | Labels to be attached to the registry.                                            |           <code title="map&#40;string&#41;">map(string)</code>           |          |             <code title="">{}</code>             |
 | _location_    | Registry location. Use `gcloud beta artifacts locations list' to get valid values |                       <code title="">string</code>                       |          |              <code title=""></code>              |
 
