@@ -57,4 +57,5 @@ variable "id" {
 variable "iam_additive" {
   description = "IAM additive bindings in {ROLE => [MEMBERS]} format.	"
   type        = map(list(string))
+  default     = {}
 }
