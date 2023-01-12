@@ -22,25 +22,48 @@ module "docker_artifact_registry" {
 
 <!-- BEGIN TFDOC -->
 
-## Variables
+## Requirements
 
-| name          | description                                                                       |                                   type                                   | required |                     default                      |
-| ------------- | --------------------------------------------------------------------------------- | :----------------------------------------------------------------------: | :------: | :----------------------------------------------: |
-| id            | Repository id                                                                     |                       <code title="">string</code>                       |    ✓     |                                                  |
-| project_id    | Registry project id.                                                              |                       <code title="">string</code>                       |    ✓     |                                                  |
-| _description_ | An optional description for the repository                                        |                       <code title="">string</code>                       |          | <code title="">Terraform-managed registry</code> |
-| _format_      | Repository format. One of DOCKER or UNSPECIFIED                                   |                       <code title="">string</code>                       |          |           <code title="">DOCKER</code>           |
-| _iam_         | IAM bindings in {ROLE => [MEMBERS]} format.                                       | <code title="map&#40;list&#40;string&#41;&#41;">map(list(string))</code> |          |             <code title="">{}</code>             |
-| _iam_additive        | IAM addtive bindings in {ROLE => [MEMBERS]} format.                                       | <code title="map&#40;list&#40;string&#41;&#41;">map(list(string))</code> |          |             <code title="">{}</code>             |
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.12.6 |
 
-| _labels_      | Labels to be attached to the registry.                                            |           <code title="map&#40;string&#41;">map(string)</code>           |          |             <code title="">{}</code>             |
-| _location_    | Registry location. Use `gcloud beta artifacts locations list' to get valid values |                       <code title="">string</code>                       |          |              <code title=""></code>              |
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_google-beta"></a> [google-beta](#provider\_google-beta) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [google-beta_google_artifact_registry_repository.registry](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_artifact_registry_repository) | resource |
+| [google-beta_google_artifact_registry_repository_iam_binding.bindings](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_artifact_registry_repository_iam_binding) | resource |
+| [google-beta_google_artifact_registry_repository_iam_member.bindings_member](https://registry.terraform.io/providers/hashicorp/google-beta/latest/docs/resources/google_artifact_registry_repository_iam_member) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_description"></a> [description](#input\_description) | An optional description for the repository | `string` | `"Terraform-managed registry"` | no |
+| <a name="input_format"></a> [format](#input\_format) | Repository format. One of DOCKER or UNSPECIFIED | `string` | `"DOCKER"` | no |
+| <a name="input_iam"></a> [iam](#input\_iam) | IAM bindings in {ROLE => [MEMBERS]} format. | `map(list(string))` | `{}` | no |
+| <a name="input_iam_additive"></a> [iam\_additive](#input\_iam\_additive) | IAM additive bindings in {ROLE => [MEMBERS]} format. | `map(list(string))` | `{}` | no |
+| <a name="input_id"></a> [id](#input\_id) | Repository id | `string` | n/a | yes |
+| <a name="input_labels"></a> [labels](#input\_labels) | Labels to be attached to the registry. | `map(string)` | `{}` | no |
+| <a name="input_location"></a> [location](#input\_location) | Registry location. Use `gcloud beta artifacts locations list' to get valid values` | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Registry project id. | `string` | n/a | yes |
 
 ## Outputs
 
-| name | description     | sensitive |
-| ---- | --------------- | :-------: |
-| id   | Repository id   |           |
-| name | Repository name |           |
+| Name | Description |
+|------|-------------|
+| <a name="output_id"></a> [id](#output\_id) | Repository id |
+| <a name="output_name"></a> [name](#output\_name) | Repository name |
 
 <!-- END TFDOC -->
