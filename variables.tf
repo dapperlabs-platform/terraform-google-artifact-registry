@@ -43,6 +43,12 @@ variable "format" {
   default     = "DOCKER"
 }
 
+variable "mode" {
+  description = "Repository mode. One of STANDARD_REPOSITORY, VIRTUAL_REPOSITORY, or REMOTE_REPOSITORY"
+  type        = string
+  default     = "STANDARD_REPOSITORY"
+}
+
 variable "description" {
   description = "An optional description for the repository"
   type        = string
@@ -58,4 +64,37 @@ variable "iam_additive" {
   description = "IAM additive bindings in {ROLE => [MEMBERS]} format.	"
   type        = map(list(string))
   default     = {}
+}
+
+variable "cleanup_policies" {
+  description = "Object containing details about the cleanup policies for an Artifact Registry repository."
+  type = map(object({
+    action = string
+    condition = optional(object({
+      tag_state             = optional(string)
+      tag_prefixes          = optional(list(string))
+      older_than            = optional(string)
+      newer_than            = optional(string)
+      package_name_prefixes = optional(list(string))
+      version_name_prefixes = optional(list(string))
+    }))
+    most_recent_versions = optional(object({
+      package_name_prefixes = optional(list(string))
+      keep_count            = optional(number)
+    }))
+  }))
+
+  default = null
+}
+
+variable "cleanup_policy_dry_run" {
+  description = "If true, the cleanup pipeline is prevented from deleting versions in this repository."
+  type        = bool
+  default     = null
+}
+
+variable "encryption_key" {
+  description = "The KMS key name to use for encryption at rest."
+  type        = string
+  default     = null
 }
